@@ -1,4 +1,4 @@
-:::mermaid
+```mermaid
 sequenceDiagram
     participant C as Client
     participant API as API Layer
