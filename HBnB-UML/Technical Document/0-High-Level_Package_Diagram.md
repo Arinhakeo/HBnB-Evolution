@@ -1,31 +1,35 @@
+# __High-Level Package Diagram__
+
 ```mermaid
-sequenceDiagram
-    participant C as Client
-    participant API as API Layer
-    participant BL as Business Logic Layer
-    participant DB as Database
-
-    Note over C,DB: User Registration Process
-
-    C->>API: POST /api/users/register
-    Note right of C: Send user details (username, email, password)
-
-    API->>BL: validateUserInput(userData)
-    Note right of API: Check for input validity and uniqueness
-
-    alt Input is valid
-        BL->>BL: hashPassword(password)
-        Note right of BL: Securely hash the password
-        BL->>DB: createUser(userData)
-        DB-->>BL: User created successfully
-        BL-->>API: Return success response
-        API-->>C: 201 Created (User registered successfully)
-    else Input is invalid
-        BL-->>API: Return validation errors
-        API-->>C: 400 Bad Request (Validation failed)
-    end
-
-%% Additional Notes:
-%% 1. Ensure proper error handling at each step
-%% 2. Implement rate limiting to prevent abuse
-%% 3. Consider adding email verification step
+classDiagram
+    class PresentationLayer {
+        <<Interface>>
+        +UserService
+        +PlaceService
+        +ReviewService
+        +AmenityService
+        +APIEndpoints
+    }
+    class BusinessLogicLayer {
+        +User
+        +Place
+        +Review
+        +Amenity
+    }
+    class PersistenceLayer {
+        +UserRepository
+        +PlaceRepository
+        +ReviewRepository
+        +AmenityRepository
+    }
+    class FacadePattern {
+        <<Definition>>
+        The Facade pattern provides a simplified interface
+        to a complex subsystem. It encapsulates a group
+        of interfaces in a higher-level interface,
+        making the subsystem easier to use.
+    }
+    PresentationLayer --> BusinessLogicLayer : Uses Facade Pattern
+    BusinessLogicLayer --> PersistenceLayer : Performs Database Operations
+    FacadePattern .. BusinessLogicLayer : Implements
+```
