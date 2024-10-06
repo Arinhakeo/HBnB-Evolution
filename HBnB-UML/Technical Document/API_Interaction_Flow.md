@@ -1,3 +1,5 @@
+# API Interaction Flow
+
 ```mermaid
 classDiagram
     class PresentationLayer {
@@ -30,4 +32,5 @@ classDiagram
     PresentationLayer --> BusinessLogicLayer : Uses Facade Pattern
     BusinessLogicLayer --> PersistenceLayer : Performs Database Operations
     FacadePattern .. BusinessLogicLayer : Implements
-    %% note right of PresentationLayer : The facade pattern simplifies access to business services.
+```
+## note right of PresentationLayer : The facade pattern simplifies access to business services.
